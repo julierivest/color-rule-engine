@@ -1,0 +1,15 @@
+<table *ngIf="data">
+  <thead>
+    <tr>
+      <th *ngFor="let column of data.columns">{{ column | titlecase }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      class="table-row"
+      *ngFor="let row of data.rows"
+      [ngStyle]="{ background: row['highlightColor'] || 'transparent' }">
+      <td *ngFor="let column of data.columns">{{ row[column] }}</td>
+    </tr>
+  </tbody>
+</table>

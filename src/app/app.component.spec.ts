@@ -1,31 +1,57 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { StudentsTableStoreService } from './students-table-store.service';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
+  let app: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let studentsTableStoreService: StudentsTableStoreService;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide: StudentsTableStoreService, useClass: StudentsTableStoreServiceMock }
+      ]
     }).compileComponents();
+
+    studentsTableStoreService = TestBed.inject(StudentsTableStoreService);
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'color-rule-engine'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('color-rule-engine');
+  it('should call loadInitialData() on init', () => {
+    app.ngOnInit();
+    expect(studentsTableStoreService.loadInitialData).toHaveBeenCalled();
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('color-rule-engine app is running!');
-  });
+  it('should reset the rule on reset button click', fakeAsync(() => {
+    spyOn(app, 'resetRuleHandler');
+    let button = fixture.debugElement.nativeElement.querySelector('button');
+    button.click();
+    tick();
+    expect(app.resetRuleHandler).toHaveBeenCalled();
+  }));
 });
+
+class StudentsTableStoreServiceMock {
+  loading$ = of(false);
+  rule$ = of({
+    condition: 'Age = 12',
+    color: '#fafc83',
+    saveInBrowser: false
+  });
+  loadInitialData = jasmine.createSpy('loadInitialData');
+  resetRule = jasmine.createSpy('resetRule');
+}

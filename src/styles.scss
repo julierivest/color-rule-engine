@@ -1,1 +1,77 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  margin: 50px auto 200px;
+
+  .content {
+    width: 80%;
+    max-width: 940px;
+    margin: 0 auto;
+
+    @media (min-width: 1000px) and (max-width: 1174px) {
+      width: 90%;
+    }
+
+    @media (max-width: 999px) {
+      width: 96%;
+    }
+  }
+}
+
+// buttons
+button {
+  padding: 6px 10px;
+  border-radius: 0;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.btn-primary {
+  border: 2px solid #336B6B;
+  color: #336B6B;
+  background: white;
+
+  &:hover,
+  &:focus {
+    background: #DDEFEF;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    color: #919999;
+    border-color: #919999;
+  }
+}
+
+.btn-secondary {
+  border: 2px solid #454545;
+  color: #454545;
+  background: white;
+
+  &:hover,
+  &:focus {
+    background: #d1d1d1;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    color: #d1d1d1;
+    border-color: #d1d1d1;
+  }
+}

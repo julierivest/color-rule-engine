@@ -1,0 +1,52 @@
+<h3>Color rule</h3>
+
+<form [formGroup]="ruleForm" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
+  <div class="form-control-group">
+    <label>
+      Condition
+      <input type="text" formControlName="condition" placeholder="Ex: Country = 'Canada'">
+    </label>
+    <div
+      *ngIf="ruleForm.controls.condition.errors && ruleForm.controls.condition.dirty && ruleForm.controls.condition.touched"
+      class="error-block">
+      <div *ngIf="ruleForm.controls.condition.errors['required']">
+        This field is required.
+      </div>
+      <div *ngIf="ruleForm.controls.condition.errors['pattern']">
+        The field must contain a column name, an operator (=, !=, >, <, >=, <=, contains, !contains), and a value.<br>
+        Examples: Country = 'Canada', Age > 14, Allergies contains 'Peanuts'.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control-group">
+    <label>
+      Color
+      <select formControlName="color">
+        <option value="">Select...</option>
+        <option [ngStyle]="{ background: color.value }" *ngFor="let color of colorOptions" [ngValue]="color.value">
+          {{ color.name }}
+        </option>
+      </select>
+    </label>
+    <div
+      *ngIf="ruleForm.controls.color.errors && ruleForm.controls.color.dirty && ruleForm.controls.color.touched"
+      class="error-block">
+      <div *ngIf="ruleForm.controls.color.errors['required']">
+        This field is required.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control-group">
+    <label>
+      <input type="checkbox" formControlName="saveInBrowser">
+      Save in browser
+    </label>
+  </div>
+
+  <div class="form-actions-wrapper">
+    <button class="btn-secondary" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn-primary" [disabled]="!ruleForm.valid">Submit</button>
+  </div>
+</form>

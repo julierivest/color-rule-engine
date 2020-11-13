@@ -1,0 +1,44 @@
+h3 {
+  margin-top: 0;
+}
+
+form {
+  margin-top: 2rem;
+
+  .form-control-group {
+    margin: 1.5rem 0;
+
+    label {
+      display: block;
+      font-weight: 600;
+
+      input[type='text'], select {
+        margin-top: 3px;
+        width: 100%;
+        padding: 5px 8px;
+        font-size: 14px;
+        border: 1px solid black;
+
+        &.ng-dirty.ng-touched.ng-invalid {
+          border-color: #ff0033;
+        }
+      }
+    }
+
+    .error-block {
+      color: #ff0033;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+  }
+
+  .form-actions-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+
+    button {
+      margin-left: 1rem;
+    }
+  }
+}
